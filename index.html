@@ -22,9 +22,55 @@
             min-height: 100vh;
             overflow-x: hidden;
             padding: 20px 0;
+            position: relative;
         }
 
+        /* EFEITO NEON DE FUNDO (PHACAL REPETIDO PASSANDO) */
+        .neon-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+            opacity: 0.15; /* Deixa bem subtil para não atrapalhar a leitura */
+        }
+
+        .neon-track {
+            display: flex;
+            white-space: nowrap;
+            font-size: 14px;
+            font-weight: 900;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #0a84ff;
+            text-shadow: 0 0 8px rgba(10, 132, 255, 0.8), 0 0 20px rgba(10, 132, 255, 0.4);
+            animation: marquee 25s linear infinite;
+            margin-bottom: 25px;
+        }
+
+        .neon-track span {
+            margin-right: 30px;
+        }
+
+        .neon-track:nth-child(even) {
+            animation-direction: reverse;
+            animation-duration: 30s;
+            color: #ffffff;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* CONTEÚDO DO PLAYER ACIMA DO FUNDO NEON */
         .player-container {
+            position: relative;
+            z-index: 1;
             width: 100%;
             max-width: 400px;
             padding: 20px;
@@ -32,14 +78,18 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .artwork-container {
-            width: 240px;
-            height: 240px;
-            border-radius: 20px;
+            width: 220px;
+            height: 220px;
+            border-radius: 18px;
             overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
             margin-bottom: 20px;
             background-color: #1c1c1e;
         }
@@ -121,7 +171,6 @@
             transform: scale(0.9);
         }
 
-        /* NOVO BOTÃO DE PLAY/PAUSE MAIS MODERNO E REDONDO */
         .btn-play {
             width: 68px;
             height: 68px;
@@ -131,7 +180,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 26px;
+            font-size: 24px;
             box-shadow: 0 8px 20px rgba(255, 255, 255, 0.25);
             transition: transform 0.2s, box-shadow 0.2s;
         }
@@ -152,10 +201,10 @@
 
         .volume-pill-container {
             position: relative;
-            width: 50px;
-            height: 140px;
+            width: 45px;
+            height: 120px;
             background-color: #1c1c1e;
-            border-radius: 25px;
+            border-radius: 22px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -166,8 +215,8 @@
 
         .volume-slider-vertical {
             appearance: none;
-            width: 140px;
-            height: 50px;
+            width: 120px;
+            height: 45px;
             transform: rotate(-90deg);
             background: transparent;
             outline: none;
@@ -183,24 +232,24 @@
 
         .volume-slider-vertical::-webkit-slider-thumb {
             appearance: none;
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             border-radius: 50%;
             background: #ffffff;
             box-shadow: 0 0 10px rgba(255,255,255,0.8);
-            margin-top: -6px;
+            margin-top: -5px;
         }
 
         .volume-label {
-            font-size: 12px;
+            font-size: 11px;
             color: #8e8e93;
             margin-top: 6px;
         }
 
-        /* BOTÕES DE EFEITOS (Grave, Abafado, 9D) */
+        /* BOTÕES DE EFEITOS */
         .effects-container {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             justify-content: center;
             width: 100%;
             flex-wrap: wrap;
@@ -210,9 +259,9 @@
             background-color: #1c1c1e;
             border: 1px solid #3a3a3c;
             color: #ffffff;
-            padding: 8px 14px;
-            border-radius: 12px;
-            font-size: 13px;
+            padding: 7px 12px;
+            border-radius: 10px;
+            font-size: 12px;
             cursor: pointer;
             transition: all 0.2s;
         }
@@ -257,6 +306,22 @@
 </head>
 <body>
 
+    <!-- FUNDO COM EFEITO NEON PHACAL PASSANDO -->
+    <div class="neon-background">
+        <div class="neon-track">
+            <span>PHACAL</span><span>PHACAL BRASIL</span><span>PHACAL</span><span>PHACAL BRASIL</span><span>PHACAL</span><span>PHACAL BRASIL</span><span>PHACAL</span><span>PHACAL BRASIL</span>
+        </div>
+        <div class="neon-track">
+            <span>BRASIL</span><span>PHACAL</span><span>BRASIL</span><span>PHACAL</span><span>BRASIL</span><span>PHACAL</span><span>BRASIL</span><span>PHACAL</span>
+        </div>
+        <div class="neon-track">
+            <span>PHACAL</span><span>PHACAL BRASIL</span><span>PHACAL</span><span>PHACAL BRASIL</span><span>PHACAL</span><span>PHACAL BRASIL</span><span>PHACAL</span><span>PHACAL BRASIL</span>
+        </div>
+        <div class="neon-track">
+            <span>BRASIL</span><span>PHACAL</span><span>BRASIL</span><span>PHACAL</span><span>BRASIL</span><span>PHACAL</span><span>BRASIL</span><span>PHACAL</span>
+        </div>
+    </div>
+
     <div class="player-container" id="playerContainer">
         <div class="artwork-container">
             <img id="albumArt" src="capa1.jpeg" alt="Capa do Álbum">
@@ -277,7 +342,7 @@
 
         <div class="controls">
             <button class="btn" id="prevBtn">⏮</button>
-            <button class="btn btn-play" id="playBtn">▶</button>
+            <button class="btn btn-play" id="playBtn">&#9658;</button>
             <button class="btn" id="nextBtn">⏭</button>
         </div>
 
@@ -382,13 +447,13 @@
         function playTrack() {
             initAudioContext();
             audio.play();
-            playBtn.innerHTML = "&#10074;&#10074;"; // Ícone de pausa moderno
+            playBtn.innerHTML = "&#10074;&#10074;";
             playerContainer.classList.add('playing');
         }
 
         function pauseTrack() {
             audio.pause();
-            playBtn.innerHTML = "&#9658;"; // Ícone de play
+            playBtn.innerHTML = "&#9658;";
             playerContainer.classList.remove('playing');
         }
 
