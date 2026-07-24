@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHACAL BRASIL - Player iOS Style</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #0c0c0c;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* Container do Player estilo iOS */
+        .ios-player {
+            background-color: #1c1c1e;
+            width: 340px;
+            padding: 22px;
+            border-radius: 32px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* Capa do Álbum Quadrada */
+        .album-art {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background-color: #2c2c2e;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .album-art img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Informações da Música */
+        .track-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .track-text h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 3px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 240px;
+        }
+
+        .track-text p {
+            font-size: 0.9rem;
+            color: #8e8e93;
+        }
+
+        .options-dots {
+            color: #8e8e93;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            cursor: pointer;
+        }
+
+        /* Barra de Progresso do Tempo */
+        .progress-container {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 5px;
+            background: #3a3a3c;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ffffff;
+            cursor: pointer;
+        }
+
+        .time-stamps {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: #8e8e93;
+        }
+
+        /* Botões de Controle */
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 35px;
+            margin: 2px 0;
+        }
+
+        .controls button {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 1.6rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .controls button:active {
+            transform: scale(0.9);
+        }
+
+        .play-pause-btn {
+            font-size: 2.2rem !important;
+        }
+
+        /* Seção de Volume Estilizada */
+        .volume-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.04);
+            padding: 8px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .vol-icon {
+            font-size: 1rem;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .vol-icon:hover {
+            opacity: 1;
+        }
+
+        .volume-section input {
+            flex: 1;
+            accent-color: #00ffcc;
+        }
+
+        /* Botões do Equalizador (Efeito Real) */
+        .eq-container {
+            display: flex;
+            gap: 8px;
+        }
+
+        .eq-btn {
+            flex: 1;
+            background-color: #2c2c2e;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #8e8e93;
+            padding: 7px 5px;
+            border-radius: 14px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .eq-btn:hover {
+            background-color: #3a3a3c;
+            color: #ffffff;
+        }
+
+        .eq-btn.active {
+            background: linear-gradient(45deg, #00ffcc, #ff007f);
+            color: #000000;
+            border-color: transparent;
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.4);
+        }
+
+        /* Botão de Aparelho */
+        .device-output {
+            background-color: #2c2c2e;
+            border: none;
+            color: #ffffff;
+            padding: 9px;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .device-output:hover {
+            background-color: #3a3a3c;
+        }
+
+        /* Créditos Neon - PHACAL BRASIL */
+        .neon-credits {
+            font-size: 0.75rem;
+            font-weight: bold;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #ffffff;
+            text-align: center;
+            text-shadow: 0 0 5px #00ffcc, 0 0 10px #00ffcc, 0 0 20px #ff007f;
+            margin-top: 2px;
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="audioElement" crossorigin="anonymous"></audio>
+
+    <div class="ios-player">
+        <div class="album-art">
+            <img id="albumCover" src="" alt="Capa do Álbum">
+        </div>
+
+        <div class="track-info">
+            <div class="track-text">
+                <h3 id="trackTitle">Nome da Música</h3>
+                <p id="trackArtist">PHACAL BRASIL</p>
+            </div>
+            <div class="options-dots">•••</div>
+        </div>
+
+        <div class="progress-container">
+            <input type="range" id="progressBar" value="0" min="0" max="100" step="1">
+            <div class="time-stamps">
+                <span id="currentTime">0:00</span>
+                <span id="durationTime">0:00</span>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button onclick="prevTrack()" title="Anterior">⏮</button>
+            <button class="play-pause-btn" id="playPauseBtn" onclick="togglePlay()" title="Tocar">▶</button>
+            <button onclick="nextTrack()" title="Próxima">⏭</button>
+        </div>
+
+        <div class="volume-section">
+            <span class="vol-icon" onclick="mudarVolumePorBotao(0)">🔈</span>
+            <input type="range" id="volumeBar" min="0" max="1" step="0.01" value="0.7">
+            <span class="vol-icon" onclick="mudarVolumePorBotao(1)">🔊</span>
+        </div>
+
+        <div class="eq-container">
+            <button class="eq-btn active" id="eqNormal" onclick="setEqualizer('normal')">Normal</button>
+            <button class="eq-btn" id="eqMuffled" onclick="setEqualizer('muffled')">☁️ Abafado</button>
+            <button class="eq-btn" id="eqBass" onclick="setEqualizer('bass')">💥 Grave</button>
+        </div>
+
+        <button class="device-output">
+            🎧 PHACAL BRASIL
+        </button>
+    </div>
+
+    <div class="neon-credits">PHACAL BRASIL</div>
+
+    <script>
+        // -------------------------------------------------------------------------
+        // COOCA AQUI OS NOMES EXATOS DOS TEUS FICHEIROS (.mp3 e .jpg) QUE ESTÃO NO GITHUB
+        // -------------------------------------------------------------------------
+        const playlist = [
+            {
+                title: "Nome da Tua Música 1",     // Nome que aparece no player
+                artist: "PHACAL BRASIL",
+                src: "musica1.mp3",                 // Nome exato do ficheiro mp3 na pasta
+                cover: "capa1.jpg"                  // Nome exato da imagem de capa na pasta
+            },
+            {
+                title: "Nome da Tua Música 2",     // Nome que aparece no player
+                artist: "PHACAL BRASIL",
+                src: "musica2.mp3",                 // Nome exato do segundo ficheiro mp3
+                cover: "capa2.jpg"                  // Nome exato da segunda capa
+            }
+        ];
+
+        let currentTrackIndex = 0;
+        const audioElement = document.getElementById('audioElement');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const trackTitle = document.getElementById('trackTitle');
+        const trackArtist = document.getElementById('trackArtist');
+        const albumCover = document.getElementById('albumCover');
+        const progressBar = document.getElementById('progressBar');
+        const volumeBar = document.getElementById('volumeBar');
+        const currentTimeEl = document.getElementById('currentTime');
+        const durationTimeEl = document.getElementById('durationTime');
+
+        let audioCtx, sourceNode, filterNode, bassNode;
+        let isAudioInit = false;
+
+        function initAudioContext() {
+            if (isAudioInit) return;
+            try {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContext();
+                sourceNode = audioCtx.createMediaElementSource(audioElement);
+                
+                filterNode = audioCtx.createBiquadFilter();
+                filterNode.type = 'lowpass';
+                filterNode.frequency.value = 20000;
+
+                bassNode = audioCtx.createBiquadFilter();
+                bassNode.type = 'lowshelf';
+                bassNode.frequency.value = 200;
+                bassNode.gain.value = 0;
+
+                sourceNode.connect(filterNode);
+                filterNode.connect(bassNode);
+                bassNode.connect(audioCtx.destination);
+
+                isAudioInit = true;
+            } catch (e) {
+                console.log("Web Audio API não suportada", e);
+            }
+        }
+
+        function setEqualizer(mode) {
+            initAudioContext();
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
+            document.querySelectorAll('.eq-btn').forEach(btn => btn.classList.remove('active'));
+
+            if (mode === 'normal') {
+                document.getElementById('eqNormal').classList.add('active');
+                if (filterNode) filterNode.frequency.value = 20000;
+                if (bassNode) bassNode.gain.value = 0;
+            } else if (mode === 'muffled') {
+                document.getElementById('eqMuffled').classList.add('active');
+                if (filterNode) filterNode.frequency.value = 700;
+                if (bassNode) bassNode.gain.value = 0;
+            } else if (mode === 'bass') {
+                document.getElementById('eqBass').classList.add('active');
+                if (filterNode) filterNode.frequency.value = 20000;
+                if (bassNode) bassNode.gain.value = 10;
+            }
+        }
+
+        function loadTrack(index) {
+            const track = playlist[index];
+            audioElement.src = track.src;
+            trackTitle.textContent = track.title;
+            trackArtist.textContent = track.artist;
+            albumCover.src = track.cover;
+            audioElement.load();
+        }
+
+        function togglePlay() {
+            initAudioContext();
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
+            if (audioElement.paused) {
+                audioElement.play();
+                playPauseBtn.textContent = "⏸";
+            } else {
+                audioElement.pause();
+                playPauseBtn.textContent = "▶";
+            }
+        }
+
+        function nextTrack() {
+            currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+            loadTrack(currentTrackIndex);
+            audioElement.play();
+            playPauseBtn.textContent = "⏸";
+        }
+
+        function prevTrack() {
+            currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
+            loadTrack(currentTrackIndex);
+            audioElement.play();
+            playPauseBtn.textContent = "⏸";
+        }
+
+        audioElement.addEventListener('timeupdate', () => {
+            if (audioElement.duration) {
+                const progress = (audioElement.currentTime / audioElement.duration) * 100;
+                progressBar.value = progress;
+                currentTimeEl.textContent = formatTime(audioElement.currentTime);
+                durationTimeEl.textContent = formatTime(audioElement.duration);
+            }
+        });
+
+        progressBar.addEventListener('input', () => {
+            const time = (progressBar.value / 100) * audioElement.duration;
+            audioElement.currentTime = time;
+        });
+
+        volumeBar.addEventListener('input', () => {
+            audioElement.volume = volumeBar.value;
+        });
+
+        function mudarVolumePorBotao(nivel) {
+            audioElement.volume = nivel;
+            volumeBar.value = nivel;
+        }
+
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = Math.floor(seconds % 60);
+            return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+        }
+
+        loadTrack(currentTrackIndex);
+        audioElement.volume = 0.7;
+    </script>
+
+</body>
+</html>
