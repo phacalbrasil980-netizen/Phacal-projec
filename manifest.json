@@ -1,0 +1,15 @@
+{
+  "name": "PHACAL BRASIL",
+  "short_name": "PHACAL",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "capa1.jpeg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}
